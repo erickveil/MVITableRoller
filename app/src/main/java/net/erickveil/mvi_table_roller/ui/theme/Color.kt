@@ -9,3 +9,11 @@ val Pink80 = Color(0xFFEFB8C8)
 val Purple40 = Color(0xFF6650a4)
 val PurpleGrey40 = Color(0xFF625b71)
 val Pink40 = Color(0xFF7D5260)
+
+val pageBGColor = Color(0xff556f75)
+val buttonColor = Color(0xff9cb6b9)
+val descriptoinBGColor = Color(0xffbd9b6e)
+val textColor = Color.Black
+val buttonTextColor = textColor
+
+

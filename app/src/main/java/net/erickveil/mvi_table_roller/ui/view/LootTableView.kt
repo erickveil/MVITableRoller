@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
@@ -17,13 +18,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import net.erickveil.mvi_table_roller.ui.theme.buttonColor
+import net.erickveil.mvi_table_roller.ui.theme.buttonTextColor
+import net.erickveil.mvi_table_roller.ui.theme.descriptoinBGColor
+import net.erickveil.mvi_table_roller.ui.theme.pageBGColor
 
 @Composable
 fun LootTableUIEnhanced(onRollTable: () -> Unit, resultText: String = "Result appears here") {
     // Screen background color
     Box(modifier = Modifier
         .fillMaxWidth()
-        .background(Color(0xFFEDE7F6))) {
+        .background(pageBGColor)) {
         Column(
             modifier = Modifier.padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(10.dp)
@@ -33,18 +38,19 @@ fun LootTableUIEnhanced(onRollTable: () -> Unit, resultText: String = "Result ap
                 onClick = onRollTable,
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(8.dp),
-                colors = ButtonDefaults.buttonColors(Color(0xFF673AB7))
+                colors = ButtonDefaults.buttonColors(buttonColor)
             ) {
-                Text("Roll on Loot Table", color = Color.White)
+                Text("Roll on Loot Table", color = buttonTextColor)
             }
 
             // Result text within a rounded corner rectangle
             Surface(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .heightIn( min = 300.dp)
                     .padding(vertical = 4.dp),
                 shape = RoundedCornerShape(8.dp),
-                color = Color(0xFFD1C4E9)
+                color = descriptoinBGColor
             ) {
                 Text(
                     text = resultText,
