@@ -1,0 +1,9 @@
+{
+  "tableName": "Dungeon Loot Table",
+  "description": "This table determines what loot you find in the dungeon.",
+  "results": [
+    "Gold coins",
+    "Magic sword",
+    "Potion of healing"
+  ]
+}
