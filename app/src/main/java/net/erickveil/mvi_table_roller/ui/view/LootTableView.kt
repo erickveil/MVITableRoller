@@ -10,18 +10,23 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import net.erickveil.mvi_table_roller.ui.theme.buttonColor
 import net.erickveil.mvi_table_roller.ui.theme.buttonTextColor
+import net.erickveil.mvi_table_roller.ui.theme.columnSpacing
+import net.erickveil.mvi_table_roller.ui.theme.controlPadding
+import net.erickveil.mvi_table_roller.ui.theme.cornerRadius
 import net.erickveil.mvi_table_roller.ui.theme.descriptoinBGColor
+import net.erickveil.mvi_table_roller.ui.theme.internalPadding
+import net.erickveil.mvi_table_roller.ui.theme.outputBoxMinHeight
 import net.erickveil.mvi_table_roller.ui.theme.pageBGColor
+import net.erickveil.mvi_table_roller.ui.theme.textFontSize
 
 @Composable
 fun LootTableUIEnhanced(onRollTable: () -> Unit, resultText: String = "Result appears here") {
@@ -30,35 +35,38 @@ fun LootTableUIEnhanced(onRollTable: () -> Unit, resultText: String = "Result ap
         .fillMaxWidth()
         .background(pageBGColor)) {
         Column(
-            modifier = Modifier.padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(10.dp)
+            modifier = Modifier.padding(controlPadding),
+            verticalArrangement = Arrangement.spacedBy(columnSpacing)
         ) {
             // Button with rounded corners
             Button(
                 onClick = onRollTable,
                 modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(8.dp),
+                shape = RoundedCornerShape(cornerRadius),
                 colors = ButtonDefaults.buttonColors(buttonColor)
             ) {
-                Text("Roll on Loot Table", color = buttonTextColor)
+                Text("Roll on Loot Table",
+                    color = buttonTextColor,
+                    style = TextStyle(fontSize = textFontSize)
+                )
             }
 
             // Result text within a rounded corner rectangle
             Surface(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .heightIn( min = 300.dp)
-                    .padding(vertical = 4.dp),
-                shape = RoundedCornerShape(8.dp),
+                    .heightIn( min = outputBoxMinHeight)
+                    .padding(vertical = internalPadding),
+                shape = RoundedCornerShape(cornerRadius),
                 color = descriptoinBGColor
             ) {
                 Text(
                     text = resultText,
                     modifier = Modifier
-                        .padding(16.dp)
+                        .padding(controlPadding)
                         .fillMaxWidth(),
                     color = Color.Black,
-                    style = MaterialTheme.typography.bodyLarge
+                    style = TextStyle(fontSize = textFontSize)
                 )
             }
         }
