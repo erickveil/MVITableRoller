@@ -13,10 +13,11 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.tooling.preview.Preview
+import net.erickveil.mvi_table_roller.ui.intent.LootTableIntent
 import net.erickveil.mvi_table_roller.ui.theme.buttonColor
 import net.erickveil.mvi_table_roller.ui.theme.buttonTextColor
 import net.erickveil.mvi_table_roller.ui.theme.columnSpacing
@@ -27,9 +28,11 @@ import net.erickveil.mvi_table_roller.ui.theme.internalPadding
 import net.erickveil.mvi_table_roller.ui.theme.outputBoxMinHeight
 import net.erickveil.mvi_table_roller.ui.theme.pageBGColor
 import net.erickveil.mvi_table_roller.ui.theme.textFontSize
+import net.erickveil.mvi_table_roller.ui.viewmodel.LootTableViewModel
 
 @Composable
-fun LootTableUIEnhanced(onRollTable: () -> Unit, resultText: String = "Result appears here") {
+fun LootTableUIEnhanced(viewModel: LootTableViewModel) {
+    val state = viewModel.state.collectAsState()
     // Screen background color
     Box(modifier = Modifier
         .fillMaxWidth()
@@ -40,7 +43,9 @@ fun LootTableUIEnhanced(onRollTable: () -> Unit, resultText: String = "Result ap
         ) {
             // Button with rounded corners
             Button(
-                onClick = onRollTable,
+                onClick = {
+                          viewModel.processIntent(LootTableIntent.RollLootTable)
+                },
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(cornerRadius),
                 colors = ButtonDefaults.buttonColors(buttonColor)
@@ -55,13 +60,13 @@ fun LootTableUIEnhanced(onRollTable: () -> Unit, resultText: String = "Result ap
             Surface(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .heightIn( min = outputBoxMinHeight)
+                    .heightIn(min = outputBoxMinHeight)
                     .padding(vertical = internalPadding),
                 shape = RoundedCornerShape(cornerRadius),
                 color = descriptoinBGColor
             ) {
                 Text(
-                    text = resultText,
+                    text = state.value.resultText,
                     modifier = Modifier
                         .padding(controlPadding)
                         .fillMaxWidth(),
@@ -73,8 +78,10 @@ fun LootTableUIEnhanced(onRollTable: () -> Unit, resultText: String = "Result ap
     }
 }
 
+/*
 @Preview(showBackground = true)
 @Composable
 fun PreviewLootTableUIEnhanced() {
-    LootTableUIEnhanced(onRollTable = {})
+    LootTableUIEnhanced()
 }
+ */

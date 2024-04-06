@@ -1,13 +1,13 @@
 package net.erickveil.mvi_table_roller
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.compose.viewModel
 import net.erickveil.mvi_table_roller.ui.theme.MVITableRollerTheme
 import net.erickveil.mvi_table_roller.ui.view.LootTableUIEnhanced
 
@@ -21,13 +21,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    LootTableUIEnhanced(onRollTable = {
-                        /*
-                         * TODO
-                         *  Implement what should happen when the button is pressed.
-                         */
-                        Log.d("@LOOT", "Button Pressed.")
-                    })
+                    LootTableUIEnhanced(viewModel())
                 }
             }
         }
