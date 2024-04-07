@@ -4,7 +4,7 @@ plugins {
     id("org.jetbrains.kotlin.plugin.serialization") version "1.5.21"
 
     id("kotlin-kapt")
-    id("dagger.hilt.android.plugin")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -80,4 +80,7 @@ dependencies {
 
 }
 
+kapt {
+    correctErrorTypes = true
+}
 
