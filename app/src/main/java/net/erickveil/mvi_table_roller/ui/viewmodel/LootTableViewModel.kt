@@ -1,17 +1,39 @@
 package net.erickveil.mvi_table_roller.ui.viewmodel
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
+import net.erickveil.mvi_table_roller.data.model.LootTable
+import net.erickveil.mvi_table_roller.data.repository.LootRepository
 import net.erickveil.mvi_table_roller.ui.intent.LootTableIntent
 import net.erickveil.mvi_table_roller.ui.viewstate.LootTableViewState
 
-class LootTableViewModel: ViewModel() {
+class LootTableViewModel(context: Context): ViewModel() {
 
     // Here we set up the state machine
     private val _state = MutableStateFlow(LootTableViewState())
     val state: StateFlow<LootTableViewState> = _state.asStateFlow()
+
+    private val repository = LootRepository(context)
+    private var lootTable: LootTable? = null
+
+    init {
+        loadLootTable()
+    }
+
+    private fun loadLootTable() {
+        // This block puts the file loading in a coroutine so that it is an asynchronous operation.
+        viewModelScope.launch {
+            lootTable = repository.getLootTable()
+            // If loading the data is a potentially lengthy process, we would want to update the
+            // state here to signal that data is ready to be accessed.
+            // We can use the `LootTable.isLoading` member to track this.
+        }
+    }
 
     fun processIntent(intent: LootTableIntent) {
         /* This `when` expression is checking the type of the intent object passed to the function.
@@ -26,12 +48,14 @@ class LootTableViewModel: ViewModel() {
     }
 
     private fun rollLootTable() {
-        // Simulate fetching data and updating the state
+        val randomItem = getRandomLootItem()
         _state.value = _state.value.copy(
-            isLoading = true,
-            // Simulate fetching a random result
-            resultText = "Magic sword"
+            isLoading = false,
+            resultText = randomItem ?: "No loot found"
         )
-        // Here, you would actually fetch the data from your model and update the state accordingly
+    }
+
+    private fun getRandomLootItem(): String? {
+        return lootTable?.results?.takeIf { it.isNotEmpty() }?.random()
     }
 }
