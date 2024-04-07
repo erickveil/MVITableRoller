@@ -32,6 +32,7 @@ class LootTableViewModel @Inject constructor(
     }
 
     private fun loadLootTable() {
+
         // This block puts the file loading in a coroutine so that it is an asynchronous operation.
         viewModelScope.launch {
             lootTable = repository.getLootTable()
