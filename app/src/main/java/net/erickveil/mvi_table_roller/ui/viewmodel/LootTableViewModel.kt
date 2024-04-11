@@ -1,10 +1,8 @@
 package net.erickveil.mvi_table_roller.ui.viewmodel
 
-import android.content.Context
-import androidx.lifecycle.ViewModel
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -13,18 +11,15 @@ import net.erickveil.mvi_table_roller.data.model.LootTable
 import net.erickveil.mvi_table_roller.data.repository.LootRepository
 import net.erickveil.mvi_table_roller.ui.intent.LootTableIntent
 import net.erickveil.mvi_table_roller.ui.viewstate.LootTableViewState
-import javax.inject.Inject
 
-@HiltViewModel
-class LootTableViewModel @Inject constructor(
-    @ApplicationContext private val context: Context)
-    : ViewModel() {
+class LootTableViewModel ( application: Application)
+    : AndroidViewModel(application) {
 
     // Here we set up the state machine
     private val _state = MutableStateFlow(LootTableViewState())
     val state: StateFlow<LootTableViewState> = _state.asStateFlow()
 
-    private val repository = LootRepository(context)
+    private val repository = LootRepository(application.applicationContext)
     private var lootTable: LootTable? = null
 
     init {

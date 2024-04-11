@@ -3,11 +3,11 @@ package net.erickveil.mvi_table_roller
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.ViewModelProvider
 import dagger.hilt.android.AndroidEntryPoint
 import net.erickveil.mvi_table_roller.ui.theme.MVITableRollerTheme
 import net.erickveil.mvi_table_roller.ui.view.LootTableUIEnhanced
@@ -16,7 +16,8 @@ import net.erickveil.mvi_table_roller.ui.viewmodel.LootTableViewModel
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-    private val viewModel: LootTableViewModel by viewModels()
+    private lateinit var viewModel: LootTableViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -26,6 +27,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
+                    viewModel = ViewModelProvider(this)[LootTableViewModel::class.java]
                     LootTableUIEnhanced(viewModel)
                 }
             }
