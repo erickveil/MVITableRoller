@@ -12,14 +12,17 @@ import net.erickveil.mvi_table_roller.data.repository.LootRepository
 import net.erickveil.mvi_table_roller.ui.intent.LootTableIntent
 import net.erickveil.mvi_table_roller.ui.viewstate.LootTableViewState
 
-class LootTableViewModel ( application: Application)
+class LootTableViewModel ( application: Application,
+    private val repository: LootRepository = LootRepository(application.applicationContext)
+)
     : AndroidViewModel(application) {
 
     // Here we set up the state machine
     private val _state = MutableStateFlow(LootTableViewState())
     val state: StateFlow<LootTableViewState> = _state.asStateFlow()
 
-    private val repository = LootRepository(application.applicationContext)
+    //private var repository = LootRepository(application.applicationContext)
+
     private var lootTable: LootTable? = null
 
     init {
@@ -31,9 +34,10 @@ class LootTableViewModel ( application: Application)
         // This block puts the file loading in a coroutine so that it is an asynchronous operation.
         viewModelScope.launch {
             lootTable = repository.getLootTable()
-            // If loading the data is a potentially lengthy process, we would want to update the
-            // state here to signal that data is ready to be accessed.
-            // We can use the `LootTable.isLoading` member to track this.
+
+            _state.value = _state.value.copy(
+                isLoaded = true
+            )
         }
     }
 
@@ -52,7 +56,6 @@ class LootTableViewModel ( application: Application)
     private fun rollLootTable() {
         val randomItem = getRandomLootItem()
         _state.value = _state.value.copy(
-            isLoading = false,
             resultText = randomItem ?: "No loot found"
         )
     }
