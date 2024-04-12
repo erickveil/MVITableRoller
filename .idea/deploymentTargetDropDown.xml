@@ -2,6 +2,9 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
+      <entry key="LootTableUIEnhancedTest">
+        <State />
+      </entry>
       <entry key="app">
         <State>
           <targetSelectedWithDropDown>
@@ -17,6 +20,9 @@
           </targetSelectedWithDropDown>
           <timeTargetWasSelectedWithDropDown value="2024-04-07T15:05:06.683428700Z" />
         </State>
+      </entry>
+      <entry key="isButtonExists()">
+        <State />
       </entry>
     </value>
   </component>

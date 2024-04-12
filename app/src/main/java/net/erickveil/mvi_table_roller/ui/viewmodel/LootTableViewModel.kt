@@ -12,7 +12,7 @@ import net.erickveil.mvi_table_roller.data.repository.LootRepository
 import net.erickveil.mvi_table_roller.ui.intent.LootTableIntent
 import net.erickveil.mvi_table_roller.ui.viewstate.LootTableViewState
 
-class LootTableViewModel ( application: Application,
+open class LootTableViewModel ( application: Application,
     private val repository: LootRepository = LootRepository(application.applicationContext)
 )
     : AndroidViewModel(application) {

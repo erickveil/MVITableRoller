@@ -31,8 +31,11 @@ import net.erickveil.mvi_table_roller.ui.theme.textFontSize
 import net.erickveil.mvi_table_roller.ui.viewmodel.LootTableViewModel
 
 @Composable
-fun LootTableUIEnhanced(viewModel: LootTableViewModel) {
-    val state = viewModel.state.collectAsState()
+fun LootTableUIEnhanced(viewModel: LootTableViewModel?) {
+    val state = viewModel?.state?.collectAsState()
+    val response: String? = state?.value?.resultText
+    val nonNullResponse: String = response ?: "No data available"
+
     // Screen background color
     Box(modifier = Modifier
         .fillMaxWidth()
@@ -44,15 +47,15 @@ fun LootTableUIEnhanced(viewModel: LootTableViewModel) {
             // Button with rounded corners
             Button(
                 onClick = {
-                          viewModel.processIntent(LootTableIntent.RollLootTable)
+                          viewModel?.processIntent(LootTableIntent.RollLootTable)
                 },
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(cornerRadius),
                 colors = ButtonDefaults.buttonColors(buttonColor)
             ) {
                 Text("Roll on Loot Table",
-                    color = buttonTextColor,
-                    style = TextStyle(fontSize = textFontSize)
+                    style = TextStyle(fontSize = textFontSize),
+                    color = buttonTextColor
                 )
             }
 
@@ -66,7 +69,7 @@ fun LootTableUIEnhanced(viewModel: LootTableViewModel) {
                 color = descriptoinBGColor
             ) {
                 Text(
-                    text = state.value.resultText,
+                    text = nonNullResponse,
                     modifier = Modifier
                         .padding(controlPadding)
                         .fillMaxWidth(),
