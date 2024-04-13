@@ -1,0 +1,29 @@
+name: Android CI
+run-name: ${{ github.actor }} is running CI tests
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - run: echo "⭐ Running Android CI ⭐"
+    - uses: actions/checkout@v4
+    - name: Set up JDK 17
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+    - name: Grant execute permission for gradlew
+      run: chmod +x ./gradlew
+    - run: echo "✅ Testing Starts Here"
+    - name: Run unit tests
+      run: ./gradlew test --info
+    - run: echo "✅ Building Starts Here"
+    - name: Build Release APK
+      run: ./gradlew assembleRelease --stacktrace
+    - run: echo "✅ Deployment Starts Here"
+    - name: Upload Release APK
+      uses: actions/upload-artifact@v3
+      with:
+        name: release-apk
+        path: app/build/outputs/apk/release/*.apk
+
