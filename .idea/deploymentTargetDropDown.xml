@@ -2,7 +2,7 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="LootTableUIEnhancedTest">
+      <entry key="Tests in 'net.erickveil.mvi_table_roller'">
         <State />
       </entry>
       <entry key="app">
@@ -21,7 +21,10 @@
           <timeTargetWasSelectedWithDropDown value="2024-04-07T15:05:06.683428700Z" />
         </State>
       </entry>
-      <entry key="isButtonExists()">
+      <entry key="isButtonPressed()">
+        <State />
+      </entry>
+      <entry key="testButtonClick()">
         <State />
       </entry>
     </value>

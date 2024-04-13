@@ -16,6 +16,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.TextStyle
 import net.erickveil.mvi_table_roller.ui.intent.LootTableIntent
 import net.erickveil.mvi_table_roller.ui.theme.buttonColor
@@ -31,10 +33,8 @@ import net.erickveil.mvi_table_roller.ui.theme.textFontSize
 import net.erickveil.mvi_table_roller.ui.viewmodel.LootTableViewModel
 
 @Composable
-fun LootTableUIEnhanced(viewModel: LootTableViewModel?) {
-    val state = viewModel?.state?.collectAsState()
-    val response: String? = state?.value?.resultText
-    val nonNullResponse: String = response ?: "No data available"
+fun LootTableUIEnhanced(viewModel: LootTableViewModel) {
+    val state = viewModel.state.collectAsState()
 
     // Screen background color
     Box(modifier = Modifier
@@ -49,13 +49,19 @@ fun LootTableUIEnhanced(viewModel: LootTableViewModel?) {
                 onClick = {
                           viewModel?.processIntent(LootTableIntent.RollLootTable)
                 },
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .semantics {
+                               this.contentDescription = ComposableDescription.ROLL_BUTTON
+                    },
                 shape = RoundedCornerShape(cornerRadius),
                 colors = ButtonDefaults.buttonColors(buttonColor)
+
             ) {
                 Text("Roll on Loot Table",
                     style = TextStyle(fontSize = textFontSize),
-                    color = buttonTextColor
+                    color = buttonTextColor,
+
                 )
             }
 
@@ -64,21 +70,39 @@ fun LootTableUIEnhanced(viewModel: LootTableViewModel?) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .heightIn(min = outputBoxMinHeight)
-                    .padding(vertical = internalPadding),
+                    .padding(vertical = internalPadding)
+                    .semantics {
+                               this.contentDescription = ComposableDescription.OUTPUT_BOX
+                    },
                 shape = RoundedCornerShape(cornerRadius),
                 color = descriptoinBGColor
             ) {
                 Text(
-                    text = nonNullResponse,
+                    text = state.value.resultText,
                     modifier = Modifier
                         .padding(controlPadding)
-                        .fillMaxWidth(),
+                        .fillMaxWidth()
+                        .semantics {
+                            this.contentDescription = ComposableDescription.OUTPUT_TEXT
+                        },
                     color = Color.Black,
                     style = TextStyle(fontSize = textFontSize)
                 )
             }
         }
     }
+}
+
+/**
+ * We *could* just use a string for the description, but this allows us to not rely on
+ * strings when we are trying to identify the composable.
+ * Instead of `onNodeWithContentDescription("ID value"),
+ * we can use `onNodeWithContentDescription(ComposableDescription.ID_VAL)`
+ */
+object ComposableDescription {
+    const val OUTPUT_BOX = "Output Display Box"
+    const val ROLL_BUTTON = "Table Roller Button"
+    const val OUTPUT_TEXT = "Output Box Text"
 }
 
 /*
