@@ -20,5 +20,6 @@ class ExampleInstrumentedTest {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
         assertEquals("net.erickveil.mvi_table_roller", appContext.packageName)
+        assertEquals(1, 0)
     }
 }
