@@ -104,3 +104,10 @@ kapt {
     correctErrorTypes = true
 }
 
+test {
+    testLogging {
+        showStandardStreams = true
+        events "passed", "skipped", "failed"
+    }
+}
+
