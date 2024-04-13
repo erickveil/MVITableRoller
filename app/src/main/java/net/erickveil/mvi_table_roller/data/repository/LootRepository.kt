@@ -7,7 +7,7 @@ import kotlinx.serialization.serializer
 import net.erickveil.mvi_table_roller.data.model.LootTable
 import java.io.IOException
 
-open class LootRepository(private val context: Context?) {
+class LootRepository(private val context: Context?) {
     fun getLootTable(): LootTable? {
         val jsonString = loadJsonFromAssets("lootTable.json")
         return jsonString?.let { parseJsonToLootTable(it) }
