@@ -45,4 +45,7 @@ class LootTableUIEnhancedTest {
         composeTestRule.onNodeWithText("Roll on Loot Table").assertExists()
         //composeTestRule.onNodeWithText("Fail").assertExists()
     }
+
+    // Test pressing button gives us a value in the output window
+
 }
