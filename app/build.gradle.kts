@@ -60,12 +60,7 @@ android {
             merges += "META-INF/LICENSE-notice.md"
         }
     }
-    test {
-        testLogging {
-            showStandardStreams = true
-            events "passed", "skipped", "failed"
-        }
-    }
+   
 }
 
 dependencies {
