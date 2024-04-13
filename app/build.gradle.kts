@@ -60,6 +60,7 @@ android {
             merges += "META-INF/LICENSE-notice.md"
         }
     }
+   
 }
 
 dependencies {
@@ -103,4 +104,6 @@ dependencies {
 kapt {
     correctErrorTypes = true
 }
+
+
 
