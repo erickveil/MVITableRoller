@@ -14,8 +14,13 @@ jobs:
         distribution: 'temurin'
     - name: Grant execute permission for gradlew
       run: chmod +x ./gradlew
+    - run: echo "✅ Testing Starts Here"
     - name: Run unit tests
       run: ./gradlew test --info
+    - run: echo "✅ Building Starts Here"
     - name: Build Android Project
       run: ./gradlew build
-      
+    - run: echo "✅ Another Build Command I'm Testing"
+    - name: Build Release APK
+      run: ./gradlew assembleRelease --stacktrace
+
