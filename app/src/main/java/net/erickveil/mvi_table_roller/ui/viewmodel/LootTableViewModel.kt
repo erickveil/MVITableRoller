@@ -12,9 +12,7 @@ import net.erickveil.mvi_table_roller.data.repository.LootRepository
 import net.erickveil.mvi_table_roller.ui.intent.LootTableIntent
 import net.erickveil.mvi_table_roller.ui.viewstate.LootTableViewState
 
-open class LootTableViewModel ( application: Application,
-    private val repository: LootRepository = LootRepository(application.applicationContext)
-)
+open class LootTableViewModel ( application: Application )
     : AndroidViewModel(application) {
 
     // Here we set up the state machine
@@ -24,8 +22,10 @@ open class LootTableViewModel ( application: Application,
     //private var repository = LootRepository(application.applicationContext)
 
     private var lootTable: LootTable? = null
+    private var repository: LootRepository
 
     init {
+        repository = LootRepository(application.applicationContext)
         loadLootTable()
     }
 
