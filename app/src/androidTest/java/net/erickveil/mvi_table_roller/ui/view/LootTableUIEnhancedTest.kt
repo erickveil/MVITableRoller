@@ -1,5 +1,6 @@
 package net.erickveil.mvi_table_roller.ui.view
 
+import android.app.Application
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -24,8 +25,7 @@ class LootTableUIEnhancedTest {
     val composeTestRule = createComposeRule()
 
     @Mock
-    private lateinit var mockViewModel:LootTableViewModel
-
+    private lateinit var mockApp:Application
 
     @Before
     fun setup() {
@@ -40,10 +40,11 @@ class LootTableUIEnhancedTest {
     fun isButtonExists() = runTest {
 
         composeTestRule.setContent {
-            LootTableUIEnhanced(mockViewModel)
+            LootTableUIEnhanced(
+                LootTableViewModel( mockApp )
+            )
         }
         composeTestRule.onNodeWithText("Roll on Loot Table").assertExists()
-        //composeTestRule.onNodeWithText("Fail").assertExists()
     }
 
     // Test pressing button gives us a value in the output window
